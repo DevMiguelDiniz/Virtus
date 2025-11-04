@@ -1,5 +1,6 @@
 package com.currencySystem.virtus.controller;
 
+import com.currencySystem.virtus.dto.VantagemResponse;
 import com.currencySystem.virtus.model.Vantagem;
 import com.currencySystem.virtus.repository.VantagemRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/vantagens")
@@ -23,8 +25,11 @@ public class VantagemController {
      */
     @GetMapping
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<List<Vantagem>> listarTodas() {
-        List<Vantagem> vantagens = vantagemRepository.findAll();
+    public ResponseEntity<List<VantagemResponse>> listarTodas() {
+        List<VantagemResponse> vantagens = vantagemRepository.findAll()
+                .stream()
+                .map(VantagemResponse::fromEntity)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(vantagens);
     }
 
@@ -35,8 +40,11 @@ public class VantagemController {
      */
     @GetMapping("/ativas")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<List<Vantagem>> listarAtivas() {
-        List<Vantagem> vantagens = vantagemRepository.findByAtivaTrue();
+    public ResponseEntity<List<VantagemResponse>> listarAtivas() {
+        List<VantagemResponse> vantagens = vantagemRepository.findByAtivaTrue()
+                .stream()
+                .map(VantagemResponse::fromEntity)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(vantagens);
     }
 
@@ -48,8 +56,9 @@ public class VantagemController {
      */
     @GetMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Vantagem> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<VantagemResponse> buscarPorId(@PathVariable Long id) {
         return vantagemRepository.findById(id)
+                .map(VantagemResponse::fromEntity)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -62,8 +71,11 @@ public class VantagemController {
      */
     @GetMapping("/empresa/{empresaId}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<List<Vantagem>> listarPorEmpresa(@PathVariable Long empresaId) {
-        List<Vantagem> vantagens = vantagemRepository.findByEmpresaId(empresaId);
+    public ResponseEntity<List<VantagemResponse>> listarPorEmpresa(@PathVariable Long empresaId) {
+        List<VantagemResponse> vantagens = vantagemRepository.findByEmpresaId(empresaId)
+                .stream()
+                .map(VantagemResponse::fromEntity)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(vantagens);
     }
 }
