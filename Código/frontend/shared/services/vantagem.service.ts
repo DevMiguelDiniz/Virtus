@@ -76,6 +76,28 @@ class VantagemService {
             } as ApiError;
         }
     }
+
+    async listarTodas(): Promise<VantagemResponse[]> {
+        try {
+            const response = await fetch(
+                `${API_BASE_URL}/api/vantagens`,
+                {
+                    method: 'GET',
+                    headers: this.getAuthHeaders()
+                }
+            );
+
+            return await this.handleResponse<VantagemResponse[]>(response);
+        } catch (error) {
+            if ((error as ApiError).status) {
+                throw error;
+            }
+            throw {
+                message: 'Erro de conexão com o servidor',
+                status: 0
+            } as ApiError;
+        }
+    }
 }
 
 export const vantagemService = new VantagemService();

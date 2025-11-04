@@ -56,7 +56,7 @@ export function EmpresaDashboard(){
                 </Link>
 
 
-                <Link href="/listar-vantagens" className='block group'>
+                <Link href="/vantagens-professor" className='block group'>
                     <Card className='p-8 hover:shadow-2xl transition-all duration-300 border-2 border-[#268c90] bg-gradient-to-br from-[#268c90]/5 to-[#6ed3d8]/5 h-full'>
                         <div className='flex flex-col items-center text-center'>
                             <div

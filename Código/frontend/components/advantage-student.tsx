@@ -12,11 +12,11 @@ interface AdvantageListProps {
     emptyMessage?: string
 }
 
-export function AdvantageList({
+export function AdvantageStudent({
     vantagens,
     onSelectVantagem,
-    showActions = false,
-    emptyMessage = "Nenhuma vantagem cadastrada"
+    showActions = true,
+    emptyMessage = "Nenhuma vantagem disponivel"
 }: AdvantageListProps) {
     const formatDate = (dateString?: string) => {
         if (!dateString) return "Data nao disponivel"
@@ -36,7 +36,7 @@ export function AdvantageList({
                     <div>
                         <h3 className="text-lg font-semibold mb-2">{emptyMessage}</h3>
                         <p className="text-muted-foreground text-sm">
-                            As vantagens cadastradas aparecerao aqui
+                            As vantagens disponiveis aparecerao aqui
                         </p>
                     </div>
                 </div>

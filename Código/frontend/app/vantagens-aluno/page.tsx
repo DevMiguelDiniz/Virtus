@@ -3,22 +3,20 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Header } from "@/components/headers/header"
-import { AdvantageList } from "@/components/advantage-list"
-import { Button } from "@/components/ui/button"
+import { AdvantageStudent } from "@/components/advantage-student"
 import { Input } from "@/components/ui/input"
 import { vantagemService } from "@/shared/services/vantagem.service"
 import { loginService } from "@/shared/services/login.service"
 import type { VantagemResponse } from "@/shared/interfaces/vantagem.interface"
-import { Loader2, Plus, Search } from "lucide-react"
+import { Loader2, Search } from "lucide-react"
 
-export default function ListarVantagensPage() {
+export default function VantagensAlunoPage() {
     const router = useRouter()
     const [vantagens, setVantagens] = useState<VantagemResponse[]>([])
     const [vantagensFiltradas, setVantagensFiltradas] = useState<VantagemResponse[]>([])
     const [searchTerm, setSearchTerm] = useState("")
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
-    const [empresaId, setEmpresaId] = useState<number | null>(null)
 
     useEffect(() => {
         const loadVantagens = async () => {
@@ -30,14 +28,12 @@ export default function ListarVantagensPage() {
                     return
                 }
 
-                if (userData.tipo !== 'EMPRESA') {
+                if (userData.tipo !== 'ALUNO') {
                     router.push('/home')
                     return
                 }
 
-                setEmpresaId(userData.id)
-
-                const vantagensData = await vantagemService.listarVantagensPorEmpresa(userData.id)
+                const vantagensData = await vantagemService.listarTodas()
                 setVantagens(vantagensData)
                 setVantagensFiltradas(vantagensData)
                 setIsLoading(false)
@@ -63,6 +59,11 @@ export default function ListarVantagensPage() {
         }
     }, [searchTerm, vantagens])
 
+    const handleResgatar = (vantagem: VantagemResponse) => {
+        console.log('Resgatar vantagem:', vantagem)
+        // TODO: Implementar logica de resgate de vantagem
+    }
+
     if (isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
@@ -79,19 +80,12 @@ export default function ListarVantagensPage() {
                     <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                         <div>
                             <h1 className="text-3xl font-bold text-foreground mb-2">
-                                Vantagens Cadastradas
+                                Vantagens Disponiveis
                             </h1>
                             <p className="text-muted-foreground">
-                                Gerencie as vantagens cadastradas pela sua empresa
+                                Confira as vantagens disponiveis para resgate
                             </p>
                         </div>
-                        <Button
-                            onClick={() => router.push('/cadastro-vantagens')}
-                            className="bg-[#268c90] hover:bg-[#155457] text-white"
-                        >
-                            <Plus className="w-4 h-4 mr-2" />
-                            Nova Vantagem
-                        </Button>
                     </div>
 
                     {error && (
@@ -111,12 +105,13 @@ export default function ListarVantagensPage() {
                         />
                     </div>
 
-                    <AdvantageList
+                    <AdvantageStudent
                         vantagens={vantagensFiltradas}
+                        onSelectVantagem={handleResgatar}
                         emptyMessage={
                             searchTerm
                                 ? "Nenhuma vantagem encontrada com esse termo"
-                                : "Voce ainda nao cadastrou vantagens"
+                                : "Nenhuma vantagem disponivel no momento"
                         }
                     />
                 </div>
