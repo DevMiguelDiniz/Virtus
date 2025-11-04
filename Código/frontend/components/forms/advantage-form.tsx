@@ -79,19 +79,16 @@ export function AdvantageForm({ empresaId, onSuccess }: AdvantageFormProps) {
 
             setSuccess(true)
 
-            // Limpar formulario
             setNome("")
             setDescricao("")
             setCustoMoedas("")
             setUrlFoto("")
             setFieldErrors({})
 
-            // Callback de sucesso
             if (onSuccess) {
                 onSuccess()
             }
 
-            // Redirecionar apos 2 segundos
             setTimeout(() => {
                 router.push('/listar-vantagens')
             }, 2000)
@@ -115,13 +112,14 @@ export function AdvantageForm({ empresaId, onSuccess }: AdvantageFormProps) {
 
     return (
         <Card className="w-full max-w-6xl p-8 border-border">
-            <div className="text-center mb-4">
+            <div className="text-left mb-4">
                 <div className="flex items-center justify-center gap-3">
                     <div className="w-16 h-16 rounded-2xl bg-[#268c90]/10 flex items-center justify-center">
                         <Gift className="w-8 h-8 text-[#268c90]" />
                     </div>
-                    <h2 className="font-heading font-bold text-3xl mb-0 text-foreground">
+                    <h2 className="font-heading font-bold text-3xl mb-0 text-muted-foreground">
                         Cadastrar Nova Vantagem
+                        <span className="block text-base font-normal mt-1">Cadastre vantagens exclusivas para os alunos resgatarem</span>
                     </h2>
                 </div>
             </div>
