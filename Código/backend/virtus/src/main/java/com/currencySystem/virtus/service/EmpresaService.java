@@ -154,9 +154,7 @@ public class EmpresaService {
             throw new IllegalStateException("Esta vantagem não pertence a esta empresa");
         }
 
-        // Soft delete - apenas desativa
-        vantagem.setAtiva(false);
-        vantagemRepository.save(vantagem);
+        vantagemRepository.delete(vantagem);
     }
 
     @Transactional(readOnly = true)
