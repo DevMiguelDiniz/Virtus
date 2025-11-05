@@ -1,8 +1,19 @@
 "use client"
 
+import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Gift, Coins, Calendar, FileText, Package } from "lucide-react"
+import { Gift, Coins, Calendar, FileText, Package, Trash2 } from "lucide-react"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import type { VantagemResponse } from "@/shared/interfaces/vantagem.interface"
 
 interface AdvantageListProps {
@@ -10,14 +21,20 @@ interface AdvantageListProps {
     onSelectVantagem?: (vantagem: VantagemResponse) => void
     showActions?: boolean
     emptyMessage?: string
+    isCompanyOwner?: boolean
+    onDelete?: (vantagemId: number) => void
 }
 
 export function AdvantageCompany({
     vantagens,
     onSelectVantagem,
     showActions = false,
-    emptyMessage = "Nenhuma vantagem cadastrada"
+    emptyMessage = "Nenhuma vantagem cadastrada",
+    isCompanyOwner = false,
+    onDelete
 }: AdvantageListProps) {
+    const [vantagemToDelete, setVantagemToDelete] = useState<number | null>(null)
+
     const formatDate = (dateString?: string) => {
         if (!dateString) return "Data nao disponivel"
         const date = new Date(dateString)
@@ -26,6 +43,13 @@ export function AdvantageCompany({
             month: '2-digit',
             year: 'numeric'
         }).format(date)
+    }
+
+    const handleConfirmDelete = () => {
+        if (vantagemToDelete && onDelete) {
+            onDelete(vantagemToDelete)
+            setVantagemToDelete(null)
+        }
     }
 
     if (vantagens.length === 0) {
@@ -50,8 +74,17 @@ export function AdvantageCompany({
                 {vantagens.map((vantagem) => (
                     <Card
                         key={vantagem.id}
-                        className="p-6 hover:shadow-lg transition-all duration-300 flex flex-col"
+                        className="p-6 hover:shadow-lg transition-all duration-300 flex flex-col relative"
                     >
+                        {isCompanyOwner && onDelete && (
+                            <button
+                                onClick={() => setVantagemToDelete(vantagem.id)}
+                                className="absolute bottom-4 right-4 p-2 rounded-full bg-[#268c90] hover:bg-[#155457] text-white transition-colors z-10"
+                                aria-label="Excluir vantagem"
+                            >
+                                <Trash2 className="w-4 h-4" />
+                            </button>
+                        )}
                         {vantagem.urlFoto && (
                             <div className="w-full h-48 mb-4 rounded-lg overflow-hidden bg-muted flex items-center justify-center">
                                 <img
@@ -123,6 +156,26 @@ export function AdvantageCompany({
                     </Card>
                 ))}
             </div>
+
+            <AlertDialog open={vantagemToDelete !== null} onOpenChange={(open) => !open && setVantagemToDelete(null)}>
+                <AlertDialogContent className="bg-white">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Tem certeza que deseja excluir esta vantagem? Esta ação não pode ser desfeita.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                            onClick={handleConfirmDelete}
+                            className="bg-[#268c90] hover:bg-[#155457]"
+                        >
+                            Excluir
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     )
 }

@@ -90,7 +90,7 @@ export function AdvantageForm({ empresaId, onSuccess }: AdvantageFormProps) {
             }
 
             setTimeout(() => {
-                router.push('/listar-vantagens')
+                router.push('/vantagens-professor')
             }, 2000)
 
         } catch (err) {

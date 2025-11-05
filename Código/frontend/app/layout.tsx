@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Poppins } from "next/font/google"
+import { Toaster } from "@/components/ui/toaster"
 import "./globals.css"
 
 const inter = Inter({
@@ -29,7 +30,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className={`${inter.variable} ${poppins.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Toaster />
+      </body>
     </html>
   )
 }

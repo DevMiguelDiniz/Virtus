@@ -98,6 +98,40 @@ class VantagemService {
             } as ApiError;
         }
     }
+
+    async excluirVantagem(empresaId: number, vantagemId: number): Promise<void> {
+        try {
+            const response = await fetch(
+                `${API_BASE_URL}/api/empresas/${empresaId}/vantagens/${vantagemId}`,
+                {
+                    method: 'DELETE',
+                    headers: this.getAuthHeaders()
+                }
+            );
+
+            // 204 No Content é sucesso - não tem corpo na resposta
+            if (response.status === 204) {
+                return;
+            }
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                const apiError: ApiError = {
+                    message: errorData.message || 'Erro ao excluir vantagem',
+                    status: response.status
+                };
+                throw apiError;
+            }
+        } catch (error) {
+            if ((error as ApiError).status) {
+                throw error;
+            }
+            throw {
+                message: 'Erro de conexão com o servidor',
+                status: 0
+            } as ApiError;
+        }
+    }
 }
 
 export const vantagemService = new VantagemService();

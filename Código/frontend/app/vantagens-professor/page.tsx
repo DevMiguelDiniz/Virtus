@@ -8,11 +8,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { vantagemService } from "@/shared/services/vantagem.service"
 import { loginService } from "@/shared/services/login.service"
+import { useToast } from "@/components/ui/use-toast"
 import type { VantagemResponse } from "@/shared/interfaces/vantagem.interface"
 import { Loader2, Plus, Search } from "lucide-react"
 
 export default function ListarVantagensPage() {
     const router = useRouter()
+    const { toast } = useToast()
     const [vantagens, setVantagens] = useState<VantagemResponse[]>([])
     const [vantagensFiltradas, setVantagensFiltradas] = useState<VantagemResponse[]>([])
     const [searchTerm, setSearchTerm] = useState("")
@@ -62,6 +64,33 @@ export default function ListarVantagensPage() {
             setVantagensFiltradas(filtered)
         }
     }, [searchTerm, vantagens])
+
+    const handleDelete = async (vantagemId: number) => {
+        if (!empresaId) return
+
+        try {
+            await vantagemService.excluirVantagem(empresaId, vantagemId)
+
+            // Atualiza a lista removendo a vantagem excluída
+            const novasVantagens = vantagens.filter(v => v.id !== vantagemId)
+            setVantagens(novasVantagens)
+            setVantagensFiltradas(novasVantagens)
+
+            toast({
+                title: "Vantagem excluída",
+                description: "A vantagem foi excluída com sucesso.",
+                variant: "default",
+            })
+        } catch (err) {
+            console.error('Erro ao excluir vantagem:', err)
+
+            toast({
+                title: "Erro ao excluir vantagem",
+                description: "Não foi possível excluir a vantagem. Tente novamente.",
+                variant: "destructive",
+            })
+        }
+    }
 
     if (isLoading) {
         return (
@@ -118,6 +147,8 @@ export default function ListarVantagensPage() {
                                 ? "Nenhuma vantagem encontrada com esse termo"
                                 : "Voce ainda nao cadastrou vantagens"
                         }
+                        isCompanyOwner={true}
+                        onDelete={handleDelete}
                     />
                 </div>
             </main>
