@@ -140,6 +140,7 @@
     border-color: rgb(var(--color-border));
     @apply border-border outline-ring/50;
   }
+
   body {
     background-color: rgb(var(--color-background));
     color: rgb(var(--color-foreground));
@@ -155,4 +156,25 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading);
+}
+
+/* View Transitions API - Suporte para navegadores modernos */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+/* Overlay manual para fallback */
+.theme-transition-overlay-manual {
+  will-change: clip-path;
+  isolation: isolate;
 }

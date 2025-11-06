@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox"
 import { MultiSelect } from "@/components/ui/multi-select"
 import Link from "next/link"
-import { User, Building2, GraduationCap, Loader2 } from "lucide-react"
+import { User, Building2, GraduationCap, Loader2, ArrowLeft } from "lucide-react"
 import { cadastroService } from "@/shared/services/cadastro.service"
 import { instituicaoService } from "@/shared/services/instituicao.service"
 import type { AlunoRequest, ProfessorRequest, EmpresaRequest, ApiError } from "@/shared/interfaces/cadastro.interface"
@@ -164,6 +164,13 @@ export function RegisterForm() {
 
     return (
         <Card className="w-full max-w-6xl p-8 border-border">
+            <Link 
+                href="/" 
+                className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6"
+            >
+                <ArrowLeft className="w-4 h-4" />
+                <span className="text-sm font-medium">Voltar à página inicial</span>
+            </Link>
             <div className="text-center mb-6">
                 <h2 className="font-heading font-bold text-3xl mb-2 text-foreground">Criar conta</h2>
                 <p className="text-muted-foreground">Escolha o tipo de conta e preencha seus dados</p>

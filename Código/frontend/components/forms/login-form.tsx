@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
-import { Mail, Lock, Loader2, CheckCircle } from "lucide-react"
+import { Mail, Lock, Loader2, CheckCircle, ArrowLeft } from "lucide-react"
 import { loginService } from "@/shared/services/login.service"
 import type { AuthError } from "@/shared/interfaces/login.interface"
 import { useRouter, useSearchParams } from "next/navigation"
@@ -54,6 +54,13 @@ export function LoginForm() {
 
     return (
         <Card className="w-full max-w-md p-6 border-border">
+            <Link 
+                href="/" 
+                className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-4"
+            >
+                <ArrowLeft className="w-4 h-4" />
+                <span className="text-sm font-medium">Voltar à página inicial</span>
+            </Link>
             <div className="flex items-center justify-center w-40 h-40 rounded-2xl mb-6 mx-auto">
                 <Image
                     src="/logo-virtus.png"

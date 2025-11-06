@@ -8,6 +8,7 @@ import { Coins, Menu, X, LogOut } from "lucide-react"
 import { loginService } from "@/shared/services/login.service"
 import type { UserData } from "@/shared/interfaces/login.interface"
 import { useRouter, usePathname } from "next/navigation"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 export function Header() {
     const router = useRouter()
@@ -27,7 +28,7 @@ export function Header() {
     }
 
     return (
-        <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+        <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40">
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between h-22">
                     <Link href={user ? "/home" : "/public"} className="flex items-center gap-2 font-heading font-bold text-xl text-foreground">
@@ -38,11 +39,12 @@ export function Header() {
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center gap-6">
+                    <nav className="hidden md:flex items-center gap-4">
+                        <ThemeToggle />
                         {user ? (
                             <>
                 <span className="text-sm font-medium text-foreground">
-                  Bem-vindo, <span className="text-[#268c90]">{user.nome}</span>
+                  Bem-vindo, <span className="text-[#268c90] dark:text-[#6ed3d8]">{user.nome}</span>
                 </span>
                                 <Button
                                     variant="ghost"
@@ -84,15 +86,18 @@ export function Header() {
                 {isMenuOpen && (
                     <nav className="md:hidden py-4 border-t border-border">
                         <div className="flex flex-col gap-4">
+                            <div className="px-2">
+                                <ThemeToggle />
+                            </div>
                             {user ? (
                                 <>
                                     <div className="px-2 py-2">
                                         <p className="text-sm font-medium text-foreground">
-                                            Bem-vindo, <span className="text-[#268c90]">{user.nome}</span>
+                                            Bem-vindo, <span className="text-[#268c90] dark:text-[#6ed3d8]">{user.nome}</span>
                                         </p>
                                         {user.tipo === 'ALUNO' && user.saldoMoedas !== undefined && (
                                             <p className="text-sm text-muted-foreground mt-1">
-                                                Saldo: <span className="font-medium text-[#268c90]">{user.saldoMoedas} moedas</span>
+                                                Saldo: <span className="font-medium text-[#268c90] dark:text-[#6ed3d8]">{user.saldoMoedas} moedas</span>
                                             </p>
                                         )}
                                     </div>
