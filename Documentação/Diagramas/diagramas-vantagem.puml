@@ -1,0 +1,142 @@
+@startuml Cadastro de Vantagem - Empresa Parceira
+
+title Cadastro de Vantagem (Empresa Parceira)
+
+actor "Empresa Parceira" as Empresa
+participant "AdvantageForm\n(Frontend)" as Form
+participant "vantagemService\n(Frontend)" as Service
+participant "EmpresaController\n(Backend)" as Controller
+participant "EmpresaService\n(Backend)" as EmpresaService
+participant "VantagemRepository\n(Backend)" as Repository
+database "Database" as DB
+
+== Preenchimento do Formulário ==
+Empresa -> Form: Preenche dados da vantagem
+
+
+Form -> Form: Validação client-side
+
+
+== Envio da Requisição ==
+Empresa -> Form: Submete formulário
+
+Form -> Service: cadastrarVantagem(empresaId, vantagem)
+Service -> Controller: POST /api/empresas/{empresaId}/vantagens
+
+
+== Autorização ==
+Controller -> Controller: @PreAuthorize("hasRole('EMPRESA')")
+Controller -> Controller: Verifica se empresa\nautenticada == empresaId
+
+alt Empresa não autorizada
+  Controller --> Service: 403 Forbidden
+  Service --> Form: Erro de autorização
+  Form --> Empresa: Exibe mensagem de erro
+else Empresa autorizada
+
+  == Processamento ==
+  Controller -> EmpresaService: cadastrarVantagem(empresaId, request)
+
+  EmpresaService -> Repository: findById(empresaId)
+  Repository -> DB: SELECT * FROM empresas WHERE usuario_id = ?
+  DB --> Repository: Empresa entity
+  Repository --> EmpresaService: Empresa
+
+  alt Empresa não encontrada
+    EmpresaService --> Controller: IllegalArgumentException
+    Controller --> Service: 400 Bad Request
+    Service --> Form: Erro: Empresa não encontrada
+    Form --> Empresa: Exibe mensagem de erro
+  else Empresa encontrada
+
+    EmpresaService -> EmpresaService: Cria nova Vantagem entity
+
+    EmpresaService -> Repository: save(vantagem)
+    Repository -> DB: INSERT INTO vantagens\n(nome, descricao, custo_moedas,\nurl_foto, empresa_id, ativa)\nVALUES (?, ?, ?, ?, ?, true)
+    DB --> Repository: Vantagem salva (com ID gerado)
+    Repository --> EmpresaService: Vantagem entity
+
+    EmpresaService -> EmpresaService: Converte para VantagemResponse
+    EmpresaService --> Controller: VantagemResponse
+
+    == Resposta ==
+    Controller --> Service: 201 CREATED + VantagemResponse
+
+    Service --> Form: Vantagem cadastrada
+    Form -> Form: Limpa campos do formulário
+    Form -> Form: Aguarda 2 segundos
+    Form --> Empresa: "Vantagem cadastrada com sucesso!"
+    Form -> Form: Redireciona para /vantagens-professor
+  end
+end
+
+@enduml
+
+@startuml Listagem de Vantagens - Aluno
+
+title Listagem de Vantagens (Aluno)
+
+actor "Aluno" as Aluno
+participant "AdvantageStudent\n(Frontend)" as Component
+participant "vantagemService\n(Frontend)" as Service
+participant "VantagemController\n(Backend)" as Controller
+participant "VantagemRepository\n(Backend)" as Repository
+database "Database" as DB
+
+== Carregamento da Página ==
+Aluno -> Component: Acessa página de vantagens
+
+Component -> Service: listarTodas()
+
+Service -> Controller: GET /api/vantagens
+
+
+== Autorização ==
+Controller -> Controller: @PreAuthorize("isAuthenticated()")
+
+
+alt Não autenticado
+  Controller --> Service: 401 Unauthorized
+  Service --> Component: Erro de autenticação
+  Component --> Aluno: Redireciona para login
+else Autenticado
+
+  == Busca no Banco ==
+  Controller -> Repository: findAll()
+  Repository -> DB: SELECT v.* FROM vantagens v
+  note right
+    Retorna todas as vantagens,
+    incluindo informações da empresa
+  end note
+
+  DB --> Repository: Lista de Vantagem entities
+  Repository --> Controller: List<Vantagem>
+
+  == Conversão para DTO ==
+  Controller -> Controller: Converte cada Vantagem\npara VantagemResponse
+
+  Controller --> Service: 200 OK + List<VantagemResponse>
+
+  == Renderização ==
+  Service --> Component: Array de VantagemResponse
+
+  alt Lista vazia
+    Component --> Aluno: Exibe mensagem:\n"Nenhuma vantagem encontrada"
+  else Lista com vantagens
+    loop Para cada vantagem
+      Component -> Component: Renderiza card da vantagem
+
+    end
+
+    Component --> Aluno: Exibe lista de vantagens
+
+    == Resgate de Vantagem (Opcional) ==
+    Aluno -> Component: Clica em "Resgatar Vantagem"
+    Component -> Component: onSelectVantagem(vantagem)
+
+
+    Component --> Aluno: Confirmação de resgate\nou erro
+  end
+end
+
+@enduml
