@@ -7,11 +7,6 @@
     <list default="true" id="597ce73e-31a1-4ded-88c4-872b9c265b36" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vantagens-professor/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/vantagens-professor/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/advantage-company.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/advantage-company.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/forms/advantage-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/forms/advantage-form.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/services/vantagem.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shared/services/vantagem.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +101,10 @@
       <workItem from="1762253879124" duration="1217000" />
       <workItem from="1762292714238" duration="1128000" />
       <workItem from="1762343281083" duration="651000" />
-      <workItem from="1762380292155" duration="2104000" />
+      <workItem from="1762380292155" duration="2635000" />
+      <workItem from="1762386690459" duration="244000" />
+      <workItem from="1762466567013" duration="317000" />
+      <workItem from="1762467017089" duration="609000" />
     </task>
     <servers />
   </component>

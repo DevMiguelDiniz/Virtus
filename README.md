@@ -24,6 +24,11 @@ Virtus  implementa um sistema de economia interna para instituições de ensino,
 ### Diagrama do Modelo Relacional
 ![Diagrama do Modelo Relacional](Documentação/Diagramas/Diagrama%20do%20Modelo%20Relacional.png)
 
+### Diagramas de Sequência
+![Diagrama de Sequência](Documentação/Diagramas/Diagrama%20de%20Sequência.jpeg)
+
+![Diagrama de Sequência 2](Documentação/Diagramas/Diagrama%20de%20Sequência%202.jpeg)
+
 ### Histórias de Usuário
  [`Histórias de Usuário.pdf`](Documentação/Diagramas/Histórias%20de%20Usuário.pdf)
 
