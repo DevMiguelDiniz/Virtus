@@ -1,6 +1,19 @@
 package com.currencySystem.virtus.service;
 
-import com.currencySystem.virtus.dto.*;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.currencySystem.virtus.dto.AlunoRequest;
+import com.currencySystem.virtus.dto.AlunoResponse;
+import com.currencySystem.virtus.dto.AlunoUpdateRequest;
+import com.currencySystem.virtus.dto.LinkPagamentoResponse;
+import com.currencySystem.virtus.dto.ResgateVantagemResponse;
+import com.currencySystem.virtus.dto.TransacaoResponse;
 import com.currencySystem.virtus.model.Aluno;
 import com.currencySystem.virtus.model.Instituicao;
 import com.currencySystem.virtus.model.ResgateVantagem;
@@ -11,14 +24,8 @@ import com.currencySystem.virtus.repository.InstituicaoRepository;
 import com.currencySystem.virtus.repository.ResgateVantagemRepository;
 import com.currencySystem.virtus.repository.TransacaoRepository;
 import com.currencySystem.virtus.repository.VantagemRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -160,5 +167,89 @@ public class AlunoService {
 
         Aluno updated = alunoRepository.save(aluno);
         return AlunoResponse.fromEntity(updated);
+    }
+
+    @Transactional
+    public LinkPagamentoResponse gerarLinkPagamento(Long alunoId, String link, Double valor) {
+        Aluno aluno = buscarPorId(alunoId);
+        
+        // Validação: valor não pode ser negativo
+        if (valor != null && valor < 0) {
+            throw new IllegalArgumentException("O valor não pode ser negativo");
+        }
+        
+        aluno.setLinkPagamento(link, valor);
+        alunoRepository.save(aluno);
+        
+        return new LinkPagamentoResponse(
+            link,
+            valor,
+            aluno.getLinkPagamentoExpiraEm(),
+            false
+        );
+    }
+
+    @Transactional(readOnly = true)
+    public LinkPagamentoResponse obterLinkPagamento(Long alunoId) {
+        Aluno aluno = buscarPorId(alunoId);
+        String link = aluno.getLinkPagamento();
+        Double valor = aluno.getValorLinkPagamento();
+        
+        if (link == null) {
+            return new LinkPagamentoResponse(null, null, null, true);
+        }
+        
+        boolean expirado = LocalDateTime.now().isAfter(aluno.getLinkPagamentoExpiraEm());
+        
+        return new LinkPagamentoResponse(
+            expirado ? null : link,
+            expirado ? null : valor,
+            aluno.getLinkPagamentoExpiraEm(),
+            expirado
+        );
+    }
+
+    @Transactional
+    public void removerLinkPagamento(Long alunoId) {
+        Aluno aluno = buscarPorId(alunoId);
+        aluno.setLinkPagamento(null);
+        alunoRepository.save(aluno);
+    }
+
+    @Transactional
+    public TransacaoResponse pagarLink(Long pagadorId, String link) {
+        // Buscar o aluno que possui este link de pagamento
+        Aluno destinatario = alunoRepository.findByLinkPagamento(link)
+            .orElseThrow(() -> new IllegalArgumentException("Link de pagamento não encontrado ou expirado"));
+
+        // Verificar se o link ainda está válido
+        if (destinatario.getLinkPagamentoExpiraEm() == null || 
+            LocalDateTime.now().isAfter(destinatario.getLinkPagamentoExpiraEm())) {
+            throw new IllegalArgumentException("Link de pagamento expirado");
+        }
+
+        Double valor = destinatario.getValorLinkPagamento();
+        if (valor == null || valor <= 0) {
+            throw new IllegalArgumentException("Valor do link de pagamento inválido");
+        }
+
+        // Criar a transação
+        Transacao transacao = new Transacao();
+        transacao.setValor(valor.intValue());
+        transacao.setMotivo("Pagamento via link: " + link.substring(link.lastIndexOf('/') + 1));
+        transacao.setDataHora(LocalDateTime.now());
+        transacao.setAluno(destinatario);
+        transacao.setProfessor(null); // Pagamento via link não tem professor
+        
+        // Atualizar saldo do destinatario (aluno)
+        destinatario.setSaldoMoedas(destinatario.getSaldoMoedas() + valor.intValue());
+        
+        // Remover o link usado
+        destinatario.setLinkPagamento(null);
+        
+        transacaoRepository.save(transacao);
+        alunoRepository.save(destinatario);
+
+        return TransacaoResponse.fromEntity(transacao);
     }
 }

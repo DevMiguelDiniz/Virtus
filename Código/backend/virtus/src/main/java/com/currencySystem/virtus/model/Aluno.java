@@ -1,11 +1,24 @@
 package com.currencySystem.virtus.model;
 
-import jakarta.persistence.*;
-import lombok.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -37,6 +50,15 @@ public class Aluno extends Usuario {
 
     @Column(nullable = false)
     private Integer saldoMoedas = 0;
+
+    @Column(name = "link_pagamento", length = 500)
+    private String linkPagamento;
+
+    @Column(name = "link_pagamento_expira_em")
+    private LocalDateTime linkPagamentoExpiraEm;
+
+    @Column(name = "valor_link_pagamento")
+    private Double valorLinkPagamento;
 
     @JsonIgnore
     @OneToMany(mappedBy = "aluno", fetch = FetchType.LAZY)
@@ -96,5 +118,50 @@ public class Aluno extends Usuario {
             return true;
         }
         return false;
+    }
+
+    // Métodos para gerenciamento de link de pagamento
+    public String getLinkPagamento() {
+        if (linkPagamento != null && linkPagamentoExpiraEm != null) {
+            if (LocalDateTime.now().isAfter(linkPagamentoExpiraEm)) {
+                return null; // Link expirado
+            }
+        }
+        return linkPagamento;
+    }
+
+    public void setLinkPagamento(String linkPagamento) {
+        this.linkPagamento = linkPagamento;
+        if (linkPagamento != null) {
+            this.linkPagamentoExpiraEm = LocalDateTime.now().plusMinutes(5);
+        } else {
+            this.linkPagamentoExpiraEm = null;
+            this.valorLinkPagamento = null; // Limpa o valor também
+        }
+    }
+
+    public void setLinkPagamento(String linkPagamento, Double valor) {
+        this.linkPagamento = linkPagamento;
+        this.valorLinkPagamento = valor;
+        if (linkPagamento != null) {
+            this.linkPagamentoExpiraEm = LocalDateTime.now().plusMinutes(5);
+        } else {
+            this.linkPagamentoExpiraEm = null;
+            this.valorLinkPagamento = null;
+        }
+    }
+
+    public Double getValorLinkPagamento() {
+        // Retorna o valor apenas se o link ainda for válido
+        if (linkPagamento != null && linkPagamentoExpiraEm != null) {
+            if (LocalDateTime.now().isAfter(linkPagamentoExpiraEm)) {
+                return null; // Link expirado, valor também expira
+            }
+        }
+        return valorLinkPagamento;
+    }
+
+    public LocalDateTime getLinkPagamentoExpiraEm() {
+        return linkPagamentoExpiraEm;
     }
 }

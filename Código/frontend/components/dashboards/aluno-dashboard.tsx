@@ -8,6 +8,7 @@ import {Card} from "@/components/ui/card";
 import {ArrowRight, Coins, DollarSign, FileSpreadsheet, Loader2, Repeat1, Send, User} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {transacaoService} from "@/shared/services/transacao.service";
+import PaymentLinkGenerator from "@/components/payment-link-generator";
 
 export function AlunoDashboard(){
     const [aluno, setAluno] = useState<UserData | null>(null);
@@ -66,6 +67,11 @@ export function AlunoDashboard(){
                         </div>
                     </Card>
                 </div>
+            </div>
+
+            {/* Card de Geração de Link de Pagamento */}
+            <div className="mb-8 max-w-4xl mx-auto">
+                <PaymentLinkGenerator userId={aluno?.id} />
             </div>
 
             <div className='grid md:grid-cols-3 gap-8 max-w-6xl mx-auto'>
