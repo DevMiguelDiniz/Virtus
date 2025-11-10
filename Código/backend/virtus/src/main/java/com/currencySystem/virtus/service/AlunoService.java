@@ -223,7 +223,7 @@ public class AlunoService {
             .orElseThrow(() -> new IllegalArgumentException("Link de pagamento não encontrado ou expirado"));
 
         // Verificar se o link ainda está válido
-        if (destinatario.getLinkPagamentoExpiraEm() == null || 
+        if (destinatario.getLinkPagamentoExpiraEm() == null ||
             LocalDateTime.now().isAfter(destinatario.getLinkPagamentoExpiraEm())) {
             throw new IllegalArgumentException("Link de pagamento expirado");
         }
@@ -240,16 +240,43 @@ public class AlunoService {
         transacao.setDataHora(LocalDateTime.now());
         transacao.setAluno(destinatario);
         transacao.setProfessor(null); // Pagamento via link não tem professor
-        
+
         // Atualizar saldo do destinatario (aluno)
         destinatario.setSaldoMoedas(destinatario.getSaldoMoedas() + valor.intValue());
-        
+
         // Remover o link usado
         destinatario.setLinkPagamento(null);
-        
+
         transacaoRepository.save(transacao);
         alunoRepository.save(destinatario);
 
         return TransacaoResponse.fromEntity(transacao);
+    }
+
+    @Transactional
+    public ResgateVantagemResponse validarResgate(Long alunoId, Long resgateId) {
+        Aluno aluno = buscarPorId(alunoId);
+
+        ResgateVantagem resgate = resgateVantagemRepository.findById(resgateId)
+                .orElseThrow(() -> new IllegalArgumentException("Resgate não encontrado"));
+
+        // Verificar se o resgate pertence ao aluno autenticado
+        if (!resgate.getAluno().getId().equals(alunoId)) {
+            throw new IllegalStateException("Este resgate não pertence a este aluno");
+        }
+
+        // Verificar se o resgate já foi utilizado
+        if (resgate.getUtilizado()) {
+            throw new IllegalStateException("Este resgate já foi utilizado");
+        }
+
+        // Marcar como utilizado
+        resgate.setUtilizado(true);
+        resgateVantagemRepository.save(resgate);
+
+        aluno.notificarEmail("Seu resgate da vantagem " + resgate.getVantagem().getNome() +
+                           " (código: " + resgate.getCodigoResgate() + ") foi validado com sucesso!");
+
+        return ResgateVantagemResponse.fromEntity(resgate);
     }
 }

@@ -262,4 +262,28 @@ public class AlunoController {
         TransacaoResponse response = alunoService.pagarLink(request.getPagadorId(), request.getLink());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    /**
+     * PUT /api/alunos/{id}/resgates/{resgateId}/validar
+     * Valida e marca um resgate como utilizado
+     * @param id ID do aluno
+     * @param resgateId ID do resgate
+     * @param authentication Dados de autenticação
+     * @return Dados do resgate validado
+     */
+    @PutMapping("/{id}/resgates/{resgateId}/validar")
+    @PreAuthorize("hasRole('ALUNO')")
+    public ResponseEntity<ResgateVantagemResponse> validarResgate(
+            @PathVariable Long id,
+            @PathVariable Long resgateId,
+            Authentication authentication
+    ) {
+        Aluno alunoAutenticado = (Aluno) authentication.getPrincipal();
+        if (!alunoAutenticado.getId().equals(id)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        ResgateVantagemResponse response = alunoService.validarResgate(id, resgateId);
+        return ResponseEntity.ok(response);
+    }
 }

@@ -17,6 +17,7 @@ public class ResgateVantagemResponse {
     private String alunoNome;
     private Long vantagemId;
     private String vantagemNome;
+    private String vantagemUrlFoto;
     private Integer valorMoedas;
     private LocalDateTime dataResgate;
     private String codigoResgate;
@@ -28,6 +29,7 @@ public class ResgateVantagemResponse {
         this.alunoNome = resgate.getAluno().getNome();
         this.vantagemId = resgate.getVantagem().getId();
         this.vantagemNome = resgate.getVantagem().getNome();
+        this.vantagemUrlFoto = resgate.getVantagem().getUrlFoto();
         this.valorMoedas = resgate.getValorMoedas();
         this.dataResgate = resgate.getDataResgate();
         this.codigoResgate = resgate.getCodigoResgate();
