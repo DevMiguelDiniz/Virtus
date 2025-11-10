@@ -8,12 +8,15 @@
       <change beforePath="$PROJECT_DIR$/../../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/enviar-moedas/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/enviar-moedas/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vantagens-aluno/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/trocar-vantagens/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vantagens-professor/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/vantagens-empresa/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/meus-resgates/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/meus-resgates/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/pagar/[codigo]/page.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/components/dashboards/aluno-dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboards/aluno-dashboard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/dashboards/empresa-dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboards/empresa-dashboard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/interfaces/vantagem.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shared/interfaces/vantagem.interface.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/services/vantagem.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shared/services/vantagem.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/forms/advantage-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/forms/advantage-form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/payment-link-generator.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/qr-payment-modal.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/services/transacao.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shared/services/transacao.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,26 +34,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "js.debugger.nextJs.config.created.client": "true",
-    "js.debugger.nextJs.config.created.server": "true",
-    "last_opened_file_path": "/Users/joaomarcelocpa/Documents/Intellij/Virtus/Código/frontend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "npm.Next.js: server-side.executor": "Run",
-    "ts.external.directory.path": "/Users/joaomarcelocpa/Documents/Intellij/Virtus/Código/frontend/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
+    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/joaomarcelocpa/Documents/Intellij/Virtus/Código/frontend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.Next.js: server-side.executor&quot;: &quot;Run&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/joaomarcelocpa/Documents/Intellij/Virtus/Código/frontend/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/components/sections" />
@@ -114,7 +117,8 @@
       <workItem from="1762466567013" duration="317000" />
       <workItem from="1762467017089" duration="609000" />
       <workItem from="1762473993560" duration="2492000" />
-      <workItem from="1762729728331" duration="5924000" />
+      <workItem from="1762729728331" duration="6626000" />
+      <workItem from="1762737666578" duration="1110000" />
     </task>
     <servers />
   </component>

@@ -6,7 +6,6 @@ import { Header } from "@/components/headers/header"
 import { CoinSenderHeader } from "@/components/headers/coin-sender-header"
 import { StudentList } from "@/components/student-list"
 import { TransferModal } from "@/components/transfer-modal"
-import QRPaymentModal from "@/components/qr-payment-modal"
 import type { Student } from "@/shared/interfaces/coin-sender.interface"
 import { transacaoService } from "@/shared/services/transacao.service"
 import { loginService } from "@/shared/services/login.service"
@@ -19,7 +18,6 @@ export default function CoinSenderPage() {
     const [professorBalance, setProfessorBalance] = useState(0)
     const [selectedStudent, setSelectedStudent] = useState<Student | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [isQRModalOpen, setIsQRModalOpen] = useState(false)
     const [searchTerm, setSearchTerm] = useState("")
     const [isLoading, setIsLoading] = useState(true)
     const [isTransferring, setIsTransferring] = useState(false)
@@ -74,62 +72,6 @@ export default function CoinSenderPage() {
     const handleSelectStudent = (student: Student) => {
         setSelectedStudent(student)
         setIsModalOpen(true)
-    }
-
-    const handleApplyTransactionCode = async (codigo: string) => {
-        setError(null)
-        setIsLoading(true)
-        try {
-            const userData = loginService.getUserData()
-            if (!userData) {
-                router.push('/login')
-                return
-            }
-
-            // Chamada ao service que aplica o código de transação (ajuste no service se necessário)
-            if (typeof transacaoService.aplicarCodigoTransacao === 'function') {
-                await transacaoService.aplicarCodigoTransacao(userData.id, codigo)
-            } else {
-                throw new Error('Método aplicarCodigoTransacao não implementado no transacaoService')
-            }
-
-            // Recarregar dados após aplicar código
-            await loadData()
-            setIsQRModalOpen(false)
-        } catch (err: any) {
-            console.error('Erro ao aplicar código de transação:', err)
-            setError(err.message || 'Erro ao aplicar código de transação.')
-        } finally {
-            setIsLoading(false)
-        }
-    }
-
-    const handleApplyPaymentLink = async (link: string) => {
-        setError(null)
-        setIsLoading(true)
-        try {
-            const userData = loginService.getUserData()
-            if (!userData) {
-                router.push('/login')
-                return
-            }
-
-            // O transacaoService deve expor um método para pagar um link de pagamento.
-            if (typeof transacaoService.pagarLinkPagamento === 'function') {
-                await transacaoService.pagarLinkPagamento(userData.id, link)
-            } else {
-                throw new Error('Método pagarLinkPagamento não implementado no transacaoService')
-            }
-
-            // Recarregar dados após pagamento do link
-            await loadData()
-            setIsQRModalOpen(false)
-        } catch (err: any) {
-            console.error('Erro ao pagar link de pagamento:', err)
-            setError(err.message || 'Erro ao pagar link de pagamento.')
-        } finally {
-            setIsLoading(false)
-        }
     }
 
     const handleTransfer = async (amount: number, description: string) => {
@@ -231,13 +173,6 @@ export default function CoinSenderPage() {
                     professorBalance={professorBalance}
                     onTransfer={handleTransfer}
                     isTransferring={isTransferring}
-                />
-
-                <QRPaymentModal
-                    isOpen={isQRModalOpen}
-                    onClose={() => setIsQRModalOpen(false)}
-                    onApplyCode={handleApplyTransactionCode}
-                    onApplyLink={handleApplyPaymentLink}
                 />
             </main>
         </div>

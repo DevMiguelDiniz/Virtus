@@ -8,7 +8,6 @@ import {Card} from "@/components/ui/card";
 import {ArrowRight, CheckCircle2, Coins, DollarSign, FileSpreadsheet, Loader2, Repeat1, Send, Ticket, User} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {transacaoService} from "@/shared/services/transacao.service";
-import PaymentLinkGenerator from "@/components/payment-link-generator";
 
 export function AlunoDashboard(){
     const [aluno, setAluno] = useState<UserData | null>(null);

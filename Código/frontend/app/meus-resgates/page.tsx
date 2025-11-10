@@ -14,6 +14,7 @@ import { Loader2, Search, Ticket, Calendar, Coins, CheckCircle2, XCircle } from 
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { useToast } from "@/hooks/use-toast"
+import { QrResgateModal } from "@/components/qr-resgate-modal"
 
 export default function MeusResgatesPage() {
     const router = useRouter()
@@ -24,6 +25,8 @@ export default function MeusResgatesPage() {
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
     const [validandoId, setValidandoId] = useState<number | null>(null)
+    const [qrModalOpen, setQrModalOpen] = useState(false)
+    const [resgateAtual, setResgateAtual] = useState<ResgateVantagemResponse | null>(null)
 
     useEffect(() => {
         const loadResgates = async () => {
@@ -77,7 +80,14 @@ export default function MeusResgatesPage() {
         }
     }
 
-    const handleValidarResgate = async (resgate: ResgateVantagemResponse) => {
+    const handleValidarResgate = (resgate: ResgateVantagemResponse) => {
+        setResgateAtual(resgate)
+        setQrModalOpen(true)
+    }
+
+    const confirmarValidacao = async () => {
+        if (!resgateAtual) return
+
         try {
             const userData = loginService.getUserData()
             if (!userData) {
@@ -85,10 +95,10 @@ export default function MeusResgatesPage() {
                 return
             }
 
-            setValidandoId(resgate.id)
-            await vantagemService.validarResgate(userData.id, resgate.id)
+            setValidandoId(resgateAtual.id)
+            await vantagemService.validarResgate(userData.id, resgateAtual.id)
 
-            const novosResgates = resgates.filter(r => r.id !== resgate.id)
+            const novosResgates = resgates.filter(r => r.id !== resgateAtual.id)
             setResgates(novosResgates)
             setResgatesFiltrados(novosResgates)
 
@@ -99,6 +109,7 @@ export default function MeusResgatesPage() {
             })
 
             setValidandoId(null)
+            setResgateAtual(null)
         } catch (err: any) {
             console.error('Erro ao validar resgate:', err)
             setValidandoId(null)
@@ -216,6 +227,16 @@ export default function MeusResgatesPage() {
                     )}
                 </div>
             </main>
+
+            {resgateAtual && (
+                <QrResgateModal
+                    open={qrModalOpen}
+                    onOpenChange={setQrModalOpen}
+                    codigoResgate={resgateAtual.codigoResgate}
+                    vantagemNome={resgateAtual.vantagemNome}
+                    onConfirm={confirmarValidacao}
+                />
+            )}
         </div>
     )
 }
