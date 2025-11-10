@@ -5,7 +5,7 @@ import {UserData} from "@/shared/interfaces/login.interface";
 import {loginService} from "@/shared/services/login.service";
 import Link from "next/link";
 import {Card} from "@/components/ui/card";
-import {ArrowRight, Coins, DollarSign, FileSpreadsheet, Loader2, Repeat1, Send, User} from "lucide-react";
+import {ArrowRight, CheckCircle2, Coins, DollarSign, FileSpreadsheet, Loader2, Repeat1, Send, Ticket, User} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {transacaoService} from "@/shared/services/transacao.service";
 import PaymentLinkGenerator from "@/components/payment-link-generator";
@@ -69,13 +69,10 @@ export function AlunoDashboard(){
                 </div>
             </div>
 
-            {/* Card de Geração de Link de Pagamento */}
-            <div className="mb-8 max-w-4xl mx-auto">
-                <PaymentLinkGenerator userId={aluno?.id} />
-            </div>
 
-            <div className='grid md:grid-cols-3 gap-8 max-w-6xl mx-auto'>
-                <Link href="/vantagens-aluno" className='block group'>
+            {/* Primeira linha - 3 cards */}
+            <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto mb-8'>
+                <Link href="/trocar-vantagens" className='block group'>
                     <Card className='p-8 hover:shadow-2xl transition-all duration-300 border-2 border-[#268c90] bg-gradient-to-br from-[#268c90]/5 to-[#6ed3d8]/5 h-full'>
                         <div className='flex flex-col items-center text-center'>
                             <div
@@ -100,7 +97,59 @@ export function AlunoDashboard(){
                     </Card>
                 </Link>
 
+                <Link href="/meus-resgates" className='block group'>
+                    <Card className='p-8 hover:shadow-2xl transition-all duration-300 border-2 border-[#268c90] bg-gradient-to-br from-[#268c90]/5 to-[#6ed3d8]/5 h-full'>
+                        <div className='flex flex-col items-center text-center'>
+                            <div
+                                className='w-20 h-20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform bg-[#268c90]'
+                            >
+                                <Ticket className='w-10 h-10 text-white' />
+                            </div>
+                            <h3 className="font-heading font-semibold text-3xl mb-4 text-foreground">
+                                Meus Códigos de Resgate
+                            </h3>
+                            <p className="text-muted-foreground leading-relaxed mb-6">
+                                Visualize todos os seus códigos de resgate de vantagens em um só lugar
+                            </p>
+                            <Button
+                                size="lg"
+                                className="bg-[#268c90] hover:bg-[#155457] text-white group-hover:gap-3 transition-all"
+                            >
+                                Acessar
+                                <ArrowRight className="ml-2 w-5 h-5" />
+                            </Button>
+                        </div>
+                    </Card>
+                </Link>
 
+                <Link href="/vantagens-resgatadas" className='block group'>
+                    <Card className='p-8 hover:shadow-2xl transition-all duration-300 border-2 border-[#268c90] bg-gradient-to-br from-[#268c90]/5 to-[#6ed3d8]/5 h-full'>
+                        <div className='flex flex-col items-center text-center'>
+                            <div
+                                className='w-20 h-20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform bg-[#268c90]'
+                            >
+                                <CheckCircle2 className='w-10 h-10 text-white' />
+                            </div>
+                            <h3 className="font-heading font-semibold text-3xl mb-4 text-foreground">
+                                Vantagens Resgatadas
+                            </h3>
+                            <p className="text-muted-foreground leading-relaxed mb-6">
+                                Histórico de todas as vantagens que você já utilizou e validou
+                            </p>
+                            <Button
+                                size="lg"
+                                className="bg-[#268c90] hover:bg-[#155457] text-white group-hover:gap-3 transition-all"
+                            >
+                                Acessar
+                                <ArrowRight className="ml-2 w-5 h-5" />
+                            </Button>
+                        </div>
+                    </Card>
+                </Link>
+            </div>
+
+            {/* Segunda linha - 2 cards centralizados */}
+            <div className='grid md:grid-cols-2 gap-8 max-w-3xl mx-auto'>
                 <Link href="/extrato" className='block group'>
                     <Card className='p-8 hover:shadow-2xl transition-all duration-300 border-2 border-[#268c90] bg-gradient-to-br from-[#268c90]/5 to-[#6ed3d8]/5 h-full'>
                         <div className='flex flex-col items-center text-center'>
@@ -125,7 +174,6 @@ export function AlunoDashboard(){
                         </div>
                     </Card>
                 </Link>
-
 
                 <Link href="/perfil" className='block group'>
                     <Card className='p-8 hover:shadow-2xl transition-all duration-300 border-2 border-[#268c90] bg-gradient-to-br from-[#268c90]/5 to-[#6ed3d8]/5 h-full'>

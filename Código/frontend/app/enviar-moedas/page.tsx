@@ -206,14 +206,14 @@ export default function CoinSenderPage() {
                         onSearchChange={setSearchTerm}
                     />
 
-                    <div>
-                        <button
-                            className="ml-2 inline-flex items-center px-4 py-2 bg-[#268c90] text-white rounded-md hover:opacity-90"
-                            onClick={() => setIsQRModalOpen(true)}
-                        >
-                            Pagar por QR / Código / Link
-                        </button>
-                    </div>
+                    {/*<div>*/}
+                    {/*    <button*/}
+                    {/*        className="ml-2 inline-flex items-center px-4 py-2 bg-[#268c90] text-white rounded-md hover:opacity-90"*/}
+                    {/*        onClick={() => setIsQRModalOpen(true)}*/}
+                    {/*    >*/}
+                    {/*        Pagar por QR / Código / Link*/}
+                    {/*    </button>*/}
+                    {/*</div>*/}
                 </div>
 
                 <StudentList

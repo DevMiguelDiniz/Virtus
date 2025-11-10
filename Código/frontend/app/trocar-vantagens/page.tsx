@@ -5,18 +5,25 @@ import { useRouter } from "next/navigation"
 import { Header } from "@/components/headers/header"
 import { AdvantageStudent } from "@/components/advantage-student"
 import { Input } from "@/components/ui/input"
+import { ConfirmResgateDialog } from "@/components/confirm-resgate-dialog"
 import { vantagemService } from "@/shared/services/vantagem.service"
 import { loginService } from "@/shared/services/login.service"
+import { transacaoService } from "@/shared/services/transacao.service"
 import type { VantagemResponse } from "@/shared/interfaces/vantagem.interface"
 import { Loader2, Search } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
 
 export default function VantagensAlunoPage() {
     const router = useRouter()
+    const { toast } = useToast()
     const [vantagens, setVantagens] = useState<VantagemResponse[]>([])
     const [vantagensFiltradas, setVantagensFiltradas] = useState<VantagemResponse[]>([])
     const [searchTerm, setSearchTerm] = useState("")
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
+    const [saldoAtual, setSaldoAtual] = useState<number>(0)
+    const [selectedVantagem, setSelectedVantagem] = useState<VantagemResponse | null>(null)
+    const [dialogOpen, setDialogOpen] = useState(false)
 
     useEffect(() => {
         const loadVantagens = async () => {
@@ -33,9 +40,15 @@ export default function VantagensAlunoPage() {
                     return
                 }
 
-                const vantagensData = await vantagemService.listarTodas()
+                // Carregar vantagens e saldo em paralelo
+                const [vantagensData, saldo] = await Promise.all([
+                    vantagemService.listarTodas(),
+                    transacaoService.getSaldoAluno(userData.id)
+                ])
+
                 setVantagens(vantagensData)
                 setVantagensFiltradas(vantagensData)
+                setSaldoAtual(saldo)
                 setIsLoading(false)
             } catch (err) {
                 console.error('Erro ao carregar vantagens:', err)
@@ -60,8 +73,43 @@ export default function VantagensAlunoPage() {
     }, [searchTerm, vantagens])
 
     const handleResgatar = (vantagem: VantagemResponse) => {
-        console.log('Resgatar vantagem:', vantagem)
-        // TODO: Implementar logica de resgate de vantagem
+        setSelectedVantagem(vantagem)
+        setDialogOpen(true)
+    }
+
+    const handleConfirmResgate = async (vantagem: VantagemResponse) => {
+        try {
+            const userData = loginService.getUserData()
+            if (!userData) {
+                router.push('/login')
+                return
+            }
+
+            await vantagemService.trocarVantagem(userData.id, vantagem.id)
+
+            setDialogOpen(false)
+
+            toast({
+                title: "Resgate realizado com sucesso!",
+                description: "Você será redirecionado para ver seu código de resgate.",
+                variant: "default",
+            })
+
+            // Redirecionar para a página de resgates após sucesso
+            setTimeout(() => {
+                router.push('/meus-resgates')
+            }, 1500)
+        } catch (err: any) {
+            console.error('Erro ao resgatar vantagem:', err)
+
+            setDialogOpen(false)
+
+            toast({
+                title: "Erro ao resgatar vantagem",
+                description: err.message || 'Erro ao resgatar vantagem. Tente novamente.',
+                variant: "destructive",
+            })
+        }
     }
 
     if (isLoading) {
@@ -116,6 +164,14 @@ export default function VantagensAlunoPage() {
                     />
                 </div>
             </main>
+
+            <ConfirmResgateDialog
+                open={dialogOpen}
+                onOpenChange={setDialogOpen}
+                vantagem={selectedVantagem}
+                saldoAtual={saldoAtual}
+                onConfirm={handleConfirmResgate}
+            />
         </div>
     )
 }

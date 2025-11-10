@@ -7,6 +7,13 @@
     <list default="true" id="597ce73e-31a1-4ded-88c4-872b9c265b36" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/enviar-moedas/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/enviar-moedas/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vantagens-aluno/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/trocar-vantagens/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vantagens-professor/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/vantagens-empresa/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/dashboards/aluno-dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboards/aluno-dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/dashboards/empresa-dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/dashboards/empresa-dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/interfaces/vantagem.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shared/interfaces/vantagem.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/services/vantagem.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shared/services/vantagem.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,25 +31,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
-    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/joaomarcelocpa/Documents/Intellij/Virtus/Código/frontend&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/joaomarcelocpa/Documents/Intellij/Virtus/Código/frontend/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "js.debugger.nextJs.config.created.client": "true",
+    "js.debugger.nextJs.config.created.server": "true",
+    "last_opened_file_path": "/Users/joaomarcelocpa/Documents/Intellij/Virtus/Código/frontend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.Next.js: server-side.executor": "Run",
+    "ts.external.directory.path": "/Users/joaomarcelocpa/Documents/Intellij/Virtus/Código/frontend/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/components/sections" />
@@ -105,6 +113,8 @@
       <workItem from="1762386690459" duration="244000" />
       <workItem from="1762466567013" duration="317000" />
       <workItem from="1762467017089" duration="609000" />
+      <workItem from="1762473993560" duration="2492000" />
+      <workItem from="1762729728331" duration="5924000" />
     </task>
     <servers />
   </component>

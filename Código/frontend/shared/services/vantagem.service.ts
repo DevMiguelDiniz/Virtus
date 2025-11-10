@@ -1,6 +1,7 @@
 import type {
     VantagemRequest,
     VantagemResponse,
+    ResgateVantagemResponse,
     ApiError
 } from '../interfaces/vantagem.interface';
 
@@ -118,6 +119,93 @@ class VantagemService {
                 const errorData = await response.json().catch(() => ({}));
                 const apiError: ApiError = {
                     message: errorData.message || 'Erro ao excluir vantagem',
+                    status: response.status
+                };
+                throw apiError;
+            }
+        } catch (error) {
+            if ((error as ApiError).status) {
+                throw error;
+            }
+            throw {
+                message: 'Erro de conexão com o servidor',
+                status: 0
+            } as ApiError;
+        }
+    }
+
+    async trocarVantagem(alunoId: number, vantagemId: number): Promise<ResgateVantagemResponse> {
+        try {
+            const response = await fetch(
+                `${API_BASE_URL}/api/alunos/${alunoId}/resgatar-vantagem`,
+                {
+                    method: 'POST',
+                    headers: this.getAuthHeaders(),
+                    body: JSON.stringify({ vantagemId })
+                }
+            );
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                const apiError: ApiError = {
+                    message: errorData.message || 'Erro ao resgatar vantagem',
+                    status: response.status
+                };
+                throw apiError;
+            }
+
+            return await response.json();
+        } catch (error) {
+            if ((error as ApiError).status) {
+                throw error;
+            }
+            throw {
+                message: 'Erro de conexão com o servidor',
+                status: 0
+            } as ApiError;
+        }
+    }
+
+    async listarResgates(alunoId: number): Promise<ResgateVantagemResponse[]> {
+        try {
+            const response = await fetch(
+                `${API_BASE_URL}/api/alunos/${alunoId}/resgates`,
+                {
+                    method: 'GET',
+                    headers: this.getAuthHeaders()
+                }
+            );
+
+            return await this.handleResponse<ResgateVantagemResponse[]>(response);
+        } catch (error) {
+            if ((error as ApiError).status) {
+                throw error;
+            }
+            throw {
+                message: 'Erro de conexão com o servidor',
+                status: 0
+            } as ApiError;
+        }
+    }
+
+    async validarResgate(alunoId: number, resgateId: number): Promise<void> {
+        try {
+            const response = await fetch(
+                `${API_BASE_URL}/api/alunos/${alunoId}/resgates/${resgateId}/validar`,
+                {
+                    method: 'PUT',
+                    headers: this.getAuthHeaders()
+                }
+            );
+
+            if (response.status === 204) {
+                return;
+            }
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                const apiError: ApiError = {
+                    message: errorData.message || 'Erro ao validar resgate',
                     status: response.status
                 };
                 throw apiError;
