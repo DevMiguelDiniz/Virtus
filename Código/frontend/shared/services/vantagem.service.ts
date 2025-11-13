@@ -4,6 +4,7 @@ import type {
     ResgateVantagemResponse,
     ApiError
 } from '../interfaces/vantagem.interface';
+import { emailService } from './email.service';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
@@ -154,7 +155,25 @@ class VantagemService {
                 throw apiError;
             }
 
-            return await response.json();
+            const resgate: ResgateVantagemResponse = await response.json();
+
+            // Envia email com QR Code usando EmailJS (não aguarda para não bloquear)
+            if (resgate.qrCodeBase64 && resgate.resgateUrl) {
+                emailService.enviarEmailResgate({
+                    toEmail: resgate.alunoEmail,
+                    toName: resgate.alunoNome,
+                    vantagemNome: resgate.vantagemNome,
+                    codigoResgate: resgate.codigoResgate,
+                    valorMoedas: resgate.valorMoedas,
+                    dataResgate: new Date(resgate.dataResgate).toLocaleString('pt-BR'),
+                    qrCodeBase64: resgate.qrCodeBase64,
+                    resgateUrl: resgate.resgateUrl
+                }).catch(error => {
+                    console.error('Erro ao enviar email (não bloqueante):', error);
+                });
+            }
+
+            return resgate;
         } catch (error) {
             if ((error as ApiError).status) {
                 throw error;

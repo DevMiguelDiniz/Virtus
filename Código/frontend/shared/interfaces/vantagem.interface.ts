@@ -32,11 +32,15 @@ export interface ResgateVantagemResponse {
     id: number;
     alunoId: number;
     alunoNome: string;
+    alunoEmail: string;
     vantagemId: number;
     vantagemNome: string;
+    vantagemDescricao: string;
     vantagemUrlFoto?: string;
     valorMoedas: number;
     dataResgate: string;
     codigoResgate: string;
     utilizado: boolean;
+    resgateUrl: string;
+    qrCodeBase64: string;
 }

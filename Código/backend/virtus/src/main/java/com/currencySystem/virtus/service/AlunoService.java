@@ -37,6 +37,8 @@ public class AlunoService {
     private final ResgateVantagemRepository resgateVantagemRepository;
     private final InstituicaoRepository instituicaoRepository;
     private final PasswordEncoder passwordEncoder;
+    private final QRCodeService qrCodeService;
+    private final com.currencySystem.virtus.config.AppProperties appProperties;
 
     @Transactional
     public AlunoResponse cadastrar(AlunoRequest request) {
@@ -121,12 +123,16 @@ public class AlunoService {
         resgate.setUtilizado(false);
 
         alunoRepository.save(aluno);
-        resgateVantagemRepository.save(resgate);
+        ResgateVantagem resgateSalvo = resgateVantagemRepository.save(resgate);
 
-        aluno.notificarEmail("Você resgatou a vantagem: " + vantagem.getNome() +
-                            ". Código de resgate: " + resgate.getCodigoResgate());
+        // Gera URL de validação do resgate
+        String resgateUrl = appProperties.getResgateValidationUrl(resgateSalvo.getId());
 
-        return ResgateVantagemResponse.fromEntity(resgate);
+        // Gera QR Code em Base64 com a URL
+        String qrCodeBase64 = qrCodeService.generateQRCodeBase64(resgateUrl);
+
+        // Retorna resposta com URL e QR Code para o frontend enviar o email
+        return ResgateVantagemResponse.fromEntityWithQRCode(resgateSalvo, resgateUrl, qrCodeBase64);
     }
 
     @Transactional(readOnly = true)
