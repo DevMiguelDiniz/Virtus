@@ -17,7 +17,7 @@ import type { AlunoRequest, EmpresaRequest, ApiError } from "@/shared/interfaces
 import type { Instituicao } from "@/shared/interfaces/instituicao.interface"
 import { useRouter } from "next/navigation"
 
-type UserType = "student" | "company"
+type UserType = "student" | "company"  | "professor"
 
 export function RegisterForm() {
     const router = useRouter()
