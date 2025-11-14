@@ -5,7 +5,7 @@
 ## 📋 Descrição
 Sistema de moeda estudantil desenvolvido no Laboratório de Desenvolvimento de Software, que permite a gestão de moedas de bonificação virtuais entre alunos e professores em ambiente acadêmico.
 
-Virtus  implementa um sistema de economia interna para instituições de ensino, onde professores podem distribuir moedas virtuais aos alunos como recompensa por participação, desempenho acadêmico e outras atividades. Os alunos podem acumular e trocar essas moedas por benefícios e vantagens oferecidas pela instituição ou empresas parceiras. 
+Virtus implementa um sistema de economia interna para instituições de ensino, onde professores podem distribuir moedas virtuais aos alunos como recompensa por participação, desempenho acadêmico e outras atividades. Os alunos podem acumular e trocar essas moedas por benefícios e vantagens oferecidas pela instituição ou empresas parceiras. 
 
 ## 📚 Documentação
 
@@ -25,9 +25,10 @@ Virtus  implementa um sistema de economia interna para instituições de ensino,
 ![Diagrama do Modelo Relacional](Documentação/Diagramas/Diagrama%20do%20Modelo%20Relacional.png)
 
 ### Diagramas de Sequência
-![Diagrama de Sequência](Documentação/Diagramas/Diagrama%20de%20Sequência.jpeg)
+![Diagrama de Sequência 1](Documentação/Diagramas/Diagrama%20de%20Sequência%201.jpeg)
 
 ![Diagrama de Sequência 2](Documentação/Diagramas/Diagrama%20de%20Sequência%202.jpeg)
+
 
 ### Histórias de Usuário
  [`Histórias de Usuário.pdf`](Documentação/Diagramas/Histórias%20de%20Usuário.pdf)

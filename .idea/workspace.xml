@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bbc8d1e1-4f92-4c10-8cc9-d8e1da895ba1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Código/frontend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Código/frontend/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="bbc8d1e1-4f92-4c10-8cc9-d8e1da895ba1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,8 +39,9 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Documentação/Apresentações" />
+      <recent name="$PROJECT_DIR$/Documentação/Scripts" />
       <recent name="$PROJECT_DIR$/Documentação/Diagramas" />
+      <recent name="$PROJECT_DIR$/Documentação/Apresentações" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -67,6 +65,7 @@
       <workItem from="1761266322517" duration="14000" />
       <workItem from="1761266640990" duration="136000" />
       <workItem from="1762214823826" duration="5000" />
+      <workItem from="1762475083308" duration="278000" />
     </task>
     <servers />
   </component>
