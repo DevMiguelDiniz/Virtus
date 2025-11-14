@@ -4,6 +4,7 @@ interface EmailResgateParams {
     toEmail: string;
     toName: string;
     vantagemNome: string;
+    vantagemImagem?: string;
     codigoResgate: string;
     valorMoedas: number;
     dataResgate: string;
@@ -58,6 +59,7 @@ class EmailService {
                 to_name: params.toName,
                 to_email: params.toEmail,
                 vantagem_nome: params.vantagemNome,
+                vantagem_imagem: params.vantagemImagem || '',
                 codigo_resgate: params.codigoResgate,
                 valor_moedas: params.valorMoedas.toString(),
                 data_resgate: params.dataResgate,

@@ -163,6 +163,7 @@ class VantagemService {
                     toEmail: resgate.alunoEmail,
                     toName: resgate.alunoNome,
                     vantagemNome: resgate.vantagemNome,
+                    vantagemImagem: resgate.vantagemUrlFoto,
                     codigoResgate: resgate.codigoResgate,
                     valorMoedas: resgate.valorMoedas,
                     dataResgate: new Date(resgate.dataResgate).toLocaleString('pt-BR'),

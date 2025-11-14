@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resgate de Vantagem - Virtus</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #268c90 0%, #155457 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .greeting {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .vantagem-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #268c90;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        .vantagem-imagem {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .vantagem-imagem img {
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .vantagem-nome {
+            font-size: 20px;
+            font-weight: bold;
+            color: #268c90;
+            margin-bottom: 10px;
+        }
+        .info-line {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            font-size: 14px;
+            color: #666;
+        }
+        .info-label {
+            font-weight: 600;
+            color: #333;
+        }
+        .qr-section {
+            text-align: center;
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .qr-section h2 {
+            color: #268c90;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        .qr-code {
+            background-color: white;
+            padding: 20px;
+            display: inline-block;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .qr-code img {
+            display: block;
+            max-width: 250px;
+            height: auto;
+        }
+        .codigo-resgate {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: white;
+            border: 2px dashed #268c90;
+            border-radius: 4px;
+        }
+        .codigo-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        .codigo-valor {
+            font-family: 'Courier New', monospace;
+            font-size: 24px;
+            font-weight: bold;
+            color: #268c90;
+            letter-spacing: 2px;
+        }
+        .instructions {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #856404;
+            font-size: 16px;
+        }
+        .instructions ul {
+            margin: 10px 0;
+            padding-left: 20px;
+            color: #856404;
+        }
+        .instructions li {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            border-top: 1px solid #dee2e6;
+        }
+        .footer a {
+            color: #268c90;
+            text-decoration: none;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #268c90;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+        .success-icon {
+            font-size: 48px;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="success-icon">✓</div>
+            <h1>Resgate Realizado com Sucesso!</h1>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="greeting">
+                Olá, <strong>{{to_name}}</strong>!
+            </div>
+
+            <div class="message">
+                Parabéns! Seu resgate foi processado com sucesso. Abaixo estão os detalhes da sua vantagem resgatada.
+            </div>
+
+            <!-- Vantagem Box -->
+            <div class="vantagem-box">
+                <div class="vantagem-imagem">
+                    <img src="{{vantagem_imagem}}" alt="{{vantagem_nome}}" />
+                </div>
+                <div class="vantagem-nome">{{vantagem_nome}}</div>
+                <div class="info-line">
+                    <span class="info-label">Valor em Moedas:</span>
+                    <span>{{valor_moedas}} moedas</span>
+                </div>
+                <div class="info-line">
+                    <span class="info-label">Data do Resgate:</span>
+                    <span>{{data_resgate}}</span>
+                </div>
+            </div>
+
+            <!-- QR Code Section -->
+            <div class="qr-section">
+                <h2>🎫 Seu QR Code de Resgate</h2>
+                <div class="qr-code">
+                    <img src="{{qr_code_base64}}" alt="QR Code de Resgate">
+                </div>
+                <div class="codigo-resgate">
+                    <div class="codigo-label">Código de Resgate</div>
+                    <div class="codigo-valor">{{codigo_resgate}}</div>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="instructions">
+                <h3>📋 Como utilizar seu resgate:</h3>
+                <ul>
+                    <li>Apresente este QR Code ou o código de resgate no estabelecimento parceiro</li>
+                    <li>O estabelecimento irá validar seu código no sistema</li>
+                    <li>Este código pode ser usado apenas uma vez</li>
+                    <li>Guarde este email para referência futura</li>
+                </ul>
+            </div>
+
+            <div class="message" style="margin-top: 30px; font-size: 14px; color: #666;">
+                Se você não realizou este resgate ou está com algum problema, entre em contato com o suporte imediatamente.
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Sistema Virtus</strong> - Sistema de Moeda Estudantil</p>
+            <p>
+                Este é um email automático, por favor não responda.<br>
+                Em caso de dúvidas, contate: <a href="mailto:{{reply_to}}">{{reply_to}}</a>
+            </p>
+            <p style="margin-top: 15px; color: #999;">
+                © 2025 Sistema Virtus. Todos os direitos reservados.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
