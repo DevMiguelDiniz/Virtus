@@ -36,6 +36,7 @@ build/
 .env
 .env.local
 .env.*.local
+application-local.properties
 
 ### Logs ###
 *.log
