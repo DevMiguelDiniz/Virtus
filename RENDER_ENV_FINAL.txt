@@ -1,0 +1,49 @@
+# ===================================================================
+# VARIÁVEIS DE AMBIENTE PARA O RENDER - NOMES PADRÃO SPRING BOOT
+# ===================================================================
+# Configure estas variáveis no painel Environment do Render
+# ===================================================================
+
+# Database - Azure PostgreSQL
+SPRING_DATASOURCE_URL=jdbc:postgresql://student-currency.postgres.database.azure.com:5432/studentcurrency?sslmode=require
+SPRING_DATASOURCE_USERNAME=studentcurrency@student-currency
+SPRING_DATASOURCE_PASSWORD=aramuni123$
+
+# JPA/Hibernate
+SPRING_JPA_HIBERNATE_DDL_AUTO=update
+SPRING_JPA_SHOW_SQL=false
+SPRING_JPA_FORMAT_SQL=true
+
+# JWT Security
+JWT_SECRET=404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+JWT_EXPIRATION=86400000
+
+# Server
+SERVER_PORT=8080
+
+# CORS (ATUALIZE com a URL do seu frontend! Use vírgula para múltiplas origens)
+CORS_ALLOWED_ORIGINS=https://seu-frontend.vercel.app
+
+# Application (ATUALIZE com a URL do seu frontend!)
+APP_BASE_URL=https://seu-frontend.vercel.app
+
+# Logging
+LOGGING_LEVEL_SECURITY=INFO
+LOGGING_LEVEL_APP=INFO
+
+# EmailJS (opcional - se quiser usar)
+EMAILJS_SERVICE_ID=service_jre6qpt
+EMAILJS_TEMPLATE_ID=template_pieoxkr
+EMAILJS_PUBLIC_KEY=0fh5aLw3qJS6uif4d
+EMAILJS_API_URL=https://api.emailjs.com/api/v1.0/email/send
+EMAILJS_FROM_NAME=Sistema Virtus
+EMAILJS_REPLY_TO=virtuscurrency@gmail.com
+EMAILJS_ENABLED=true
+
+# ===================================================================
+# IMPORTANTE:
+# - Atualize CORS_ALLOWED_ORIGINS com a URL real do frontend
+# - Atualize APP_BASE_URL com a URL real do frontend
+# - Para múltiplas origens no CORS, separe por vírgula sem espaços
+#   Exemplo: https://app1.com,https://app2.com
+# ===================================================================
