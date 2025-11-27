@@ -15,6 +15,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  output: 'standalone', // Para Docker
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
     NEXT_PUBLIC_EMAILJS_SERVICE_ID: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,

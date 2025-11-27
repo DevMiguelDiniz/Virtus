@@ -1,0 +1,60 @@
+# Configuração para o Render - Backend Only
+# Este arquivo documenta as configurações necessárias para deploy do backend no Render
+
+services:
+  # Backend Spring Boot (Docker)
+  - type: web
+    name: virtus-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: ./codigo/backend/virtus
+    envVars:
+      # Adicione suas variáveis de ambiente no painel do Render:
+
+      # Database - PostgreSQL
+      - key: SPRING_DATASOURCE_URL
+        # Exemplo: jdbc:postgresql://dpg-xxxxx.oregon-postgres.render.com:5432/dbname
+        # Para banco Render: jdbc:postgresql://host-interno:5432/nome-do-banco
+        # Para banco externo: jdbc:postgresql://seu-host.com:5432/dbname
+
+      - key: SPRING_DATASOURCE_USERNAME
+        # Usuário do banco de dados
+
+      - key: SPRING_DATASOURCE_PASSWORD
+        # Senha do banco de dados
+
+      # JPA/Hibernate
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
+
+      - key: SPRING_JPA_SHOW_SQL
+        value: false
+
+      # JWT Security
+      - key: JWT_SECRET
+        # IMPORTANTE: Gere uma nova chave secreta para produção!
+        # Exemplo: use uma string longa e aleatória
+
+      - key: JWT_EXPIRATION
+        value: 86400000  # 24 horas em milissegundos
+
+      # Server Configuration
+      - key: SERVER_PORT
+        value: 8080
+
+      # CORS - URLs permitidas do frontend
+      - key: CORS_ALLOWED_ORIGINS
+        # Exemplo: https://seu-frontend.vercel.app,https://outro-dominio.com
+        # Use vírgula para separar múltiplas origens
+
+      # Application - URL base do frontend
+      - key: APP_BASE_URL
+        # URL do frontend para gerar links em emails
+        # Exemplo: https://seu-frontend.vercel.app
+
+      # Logging (opcional - para debug use DEBUG)
+      - key: LOGGING_LEVEL_SECURITY
+        value: INFO
+
+      - key: LOGGING_LEVEL_APP
+        value: INFO
